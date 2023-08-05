@@ -1,3 +1,31 @@
+import React  from 'react'
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, TouchableOpacity, View, Keyboard, ScrollView  } from 'react-native'
+
+
+const helloWorld = () => {
+  return (
+    <View style={styles.TextArea}>
+        <Text style={styles.text}>Hello, World!</Text>
+    </View>
+  )
+}
+
+export default helloWorld
+
+
+const styles = StyleSheet.create({
+    TextArea:{
+        height:100,
+        width:100,
+       backgroundColor:"#a2d2ff",
+       justifyContent:"center",
+       alignItems:'center'
+    },
+    text:{
+        fontSize:14,
+    }
+})
+
 // Hello, World!
 
 // When using JSX React needs to be in scope. This means you have to import it.
