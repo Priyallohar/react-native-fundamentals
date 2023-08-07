@@ -700,3 +700,13 @@ const PEOPLE = [
     },
   },
 ];
+
+import React from 'react'
+
+const longLists = () => {
+  return (
+    <div></div>
+  )
+}
+
+export default longLists
