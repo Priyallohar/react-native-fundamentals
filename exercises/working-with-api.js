@@ -16,13 +16,11 @@ const styles = StyleSheet.create({
 });
 
 export default () => {
+  const[people ,setPeople] = useState([])
   return (
     <SafeAreaView>
       <FlatList
-        data={[
-          { name: { title: "Monsieur", first: "Emilio", last: "Legrand" } },
-          { name: { title: "Miss", first: "Linda", last: "King" } },
-        ]}
+        data={people}
         keyExtractor={(item) => `${item.name.first}-${item.name.last}`}
         renderItem={({ item }) => {
           return (
