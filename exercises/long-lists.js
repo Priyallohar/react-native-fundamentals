@@ -702,10 +702,93 @@ const PEOPLE = [
 ];
 
 import React from 'react'
+import { View ,Text,ScrollView , FlatList , SectionList} from 'react-native';
+
+const groupPeopleByLastName = (_data = []) => {
+  const data = [..._data];
+  const groupedData = data.reduce((accumulator, item) => {
+    const group = item.name.last[0].toUpperCase();
+
+    if (accumulator[group]) {
+      accumulator[group].data.push(item);
+    } else {
+      accumulator[group] = {
+        title: group,
+        data: [item],
+      };
+    }
+
+    return accumulator; 
+  }, {});
+
+  const sections = Object.keys(groupedData).map((key) => groupedData[key]);
+  return sections;
+};
+
 
 const longLists = () => {
   return (
-    <div></div>
+/* {<ScrollView>
+    <View>
+    {
+      PEOPLE.map((item,index)=>
+      (<Text key={index} style = {{
+        width:"100%",
+        height:30,
+       padding:10,
+       fontSize:16,
+       marginBottom:10,
+       borderBottomWidth:10,
+       borderBottomColor:"#A9A9A9"
+      }}>
+        {item.name.first +" "+ item.name.last}
+        </Text>))
+    }
+    </View>
+    </ScrollView> }*/
+    // FlatList
+     <SectionList 
+     sections={groupPeopleByLastName(PEOPLE)}
+    keyExtractor={(item)=>`${item.name.first}-${item.name.last}`}
+    renderSectionHeader={({section})=>{
+      return(
+    <View>
+      <Text style = {{
+       fontSize:20,
+       marginBottom:10,
+       fontWeight:30,
+       padding:10,
+       backgroundColor:"#DCDCDC"
+      }}
+      >{section.title}</Text>
+    </View>
+    )}}
+    renderItem={({item})=>(
+      // <>
+      <View>
+       <Text style = {{
+        width:"100%",
+        height:30,
+       padding:10,
+       fontSize:16,
+       marginBottom:10,
+      }}>{item.name.first} {item.name.last}</Text>
+      </View>
+      // <View style = {{
+      //   width:"100%",
+      //  borderBottomWidth:1,
+      //  borderBottomColor:"#808080"
+      // }}></View>
+      /* </> */
+    )}
+    ItemSeparatorComponent={()=><View style = {{
+      width:"100%",
+     borderBottomWidth:1,
+     borderBottomColor:"#808080"
+    }}></View>}
+
+
+    />
   )
 }
 

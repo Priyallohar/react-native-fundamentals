@@ -1,4 +1,4 @@
-import React from "react";
+import React  , {useEffect , useState}from "react";
 import { FlatList, Text, View, StyleSheet, SafeAreaView } from "react-native";
 
 const styles = StyleSheet.create({
