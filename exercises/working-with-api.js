@@ -1,5 +1,5 @@
 import React  , {useEffect , useState}from "react";
-import { FlatList, Text, View, StyleSheet, SafeAreaView } from "react-native";
+import { FlatList, Text, View, StyleSheet, SafeAreaView, ActivityIndicator } from "react-native";
 
 const styles = StyleSheet.create({
   row: {
@@ -15,8 +15,43 @@ const styles = StyleSheet.create({
   },
 });
 
-export default () => {
+const usePeople =()=>{
   const[people ,setPeople] = useState([])
+  const[loading , setLoading] = useState(true)
+
+  useEffect(()=>{
+    setLoading(true)
+   const timeOut= setTimeout(()=>{
+      fetch(`https://randomuser.me/api/?results=100&inc=name`)
+      .then(response=>response.json())
+      .then((response =>{
+        console.log(response)
+        setPeople(response.results)
+      }))
+      .catch(error => {
+
+        alert("Sorry, Something went wrong")
+      } )
+      .finally(()=>{
+        setLoading(false)
+      }
+      )
+    },1000)
+    
+
+    return ()=>{
+      clearTimeout(timeOut)
+    }
+    
+  },[])
+
+  return{ people , loading};
+}
+
+export default () => {
+ 
+  const { people , loading}=usePeople()
+
   return (
     <SafeAreaView>
       <FlatList
@@ -32,6 +67,12 @@ export default () => {
           );
         }}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
+        ListEmptyComponent={()=>{
+          if(loading){
+            return <ActivityIndicator size="large"/>
+          }
+          return null
+        }}
       />
     </SafeAreaView>
   );
